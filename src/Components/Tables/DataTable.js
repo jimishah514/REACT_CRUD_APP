@@ -7,7 +7,7 @@ class DataTable extends Component {
   deleteItem = id => {
     let confirmDelete = window.confirm('Delete item forever?')
     if(confirmDelete){
-      fetch('http://localhost:3000/crud', {
+      fetch('http://localhost:3001/crud', {
       method: 'delete',
       headers: {
         'Content-Type': 'application/json'
@@ -41,7 +41,8 @@ class DataTable extends Component {
             <div style={{width:"110px"}}>
               <ModalForm buttonLabel="Edit" item={item} updateState={this.props.updateState}/>
               {' '}
-              <Button color="danger" onClick={() => this.deleteItem(item.id)}>Del</Button>
+              <Button color="danger" onClick={() => this.deleteItem(item.id)}>Delete</Button>
+              {/* <Button color="danger" onClick={() => this.props.deleteItemFromState(item.id)}>Del</Button> */}
             </div>
           </td>
         </tr>

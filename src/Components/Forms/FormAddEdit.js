@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class AddEditForm extends React.Component {
+   
   state = {
     id: 0,
     first: '',
@@ -16,14 +17,47 @@ class AddEditForm extends React.Component {
     this.setState({[e.target.name]: e.target.value})
   }
 
+  submitFormAddViewOnly = e => {
+    e.preventDefault()
+    console.log("Target first.value: ",e.target.first.value)
+    const item = {
+      id : Date.now(),
+      first :e.target.first.value,
+      last: e.target.last.value,
+      email : e.target.email.value,
+      phone : e.target.phone.value,
+      location: e.target.location.value,
+      hobby : e.target.hobby.value
+    }
+    this.props.addItemToState(item)
+    this.props.toggle()
+  }
+
+
+  submitFormEditViewOnly = e => {
+  e.preventDefault()
+  const item = {
+    id : Date.now(),
+    first :e.target.first.value,
+    last: e.target.last.value,
+    email : e.target.email.value,
+    phone : e.target.phone.value,
+    location: e.target.location.value,
+    hobby : e.target.hobby.value
+  }
+  this.props.updateState(item)
+  this.props.toggle()
+}
+
   submitFormAdd = e => {
     e.preventDefault()
-    fetch('http://localhost:3000/crud', {
+    fetch('http://localhost:3001/crud', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        // id : Date.now(),
         first: this.state.first,
         last: this.state.last,
         email: this.state.email,
@@ -46,7 +80,7 @@ class AddEditForm extends React.Component {
 
   submitFormEdit = e => {
     e.preventDefault()
-    fetch('http://localhost:3000/crud', {
+    fetch('http://localhost:3001/crud', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json'
@@ -84,6 +118,7 @@ class AddEditForm extends React.Component {
 
   render() {
     return (
+      // <Form onSubmit={this.props.item ? this.submitFormEditViewOnly : this.submitFormAddViewOnly}>
       <Form onSubmit={this.props.item ? this.submitFormEdit : this.submitFormAdd}>
         <FormGroup>
           <Label for="first">First Name</Label>
